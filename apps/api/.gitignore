@@ -1,0 +1,13 @@
+node_modules/
+dist/
+.env
+.env.local
+*.log
+
+/src/generated/prisma
+
+# Folder skill yang otomatis dibuat saat `prisma init`
+.claude/
+.windsurf/
+.agents/
+skills-lock.json

@@ -1,0 +1,96 @@
+// Prisma schema — Sistem Pengelolaan Kas Masjid Manbaul Khoir
+// Dokumentasi: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+enum TransactionType {
+  MASUK
+  KELUAR
+}
+
+enum UserRole {
+  BENDAHARA
+  KETUA_DKM
+}
+
+enum AuditAction {
+  CREATE
+  UPDATE
+  DELETE
+}
+
+model User {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  passwordHash String
+  name         String
+  role         UserRole @default(BENDAHARA)
+  isActive     Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  transactions Transaction[]
+  auditLogs    AuditLog[]
+
+  @@map("users")
+}
+
+model Category {
+  id        String          @id @default(cuid())
+  name      String
+  type      TransactionType
+  isActive  Boolean         @default(true)
+  createdAt DateTime        @default(now())
+  updatedAt DateTime        @updatedAt
+
+  transactions Transaction[]
+
+  @@unique([name, type])
+  @@index([type])
+  @@map("categories")
+}
+
+model Transaction {
+  id          String          @id @default(cuid())
+  date        DateTime        @db.Date
+  type        TransactionType
+  categoryId  String
+  amount      Decimal         @db.Decimal(15, 2)
+  note        String?
+  createdById String
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
+
+  category  Category   @relation(fields: [categoryId], references: [id], onDelete: Restrict)
+  createdBy User       @relation(fields: [createdById], references: [id], onDelete: Restrict)
+  auditLogs AuditLog[]
+
+  @@index([date])
+  @@index([type])
+  @@index([categoryId])
+  @@map("transactions")
+}
+
+model AuditLog {
+  id            String      @id @default(cuid())
+  transactionId String?
+  action        AuditAction
+  detail        Json?
+  performedById String
+  createdAt     DateTime    @default(now())
+
+  transaction Transaction? @relation(fields: [transactionId], references: [id], onDelete: SetNull)
+  performedBy User         @relation(fields: [performedById], references: [id], onDelete: Restrict)
+
+  @@index([transactionId])
+  @@index([createdAt])
+  @@map("audit_logs")
+}
