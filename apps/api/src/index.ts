@@ -2,6 +2,8 @@ import "dotenv/config";
 import express from "express";
 import cors from "cors";
 import { prisma } from "./lib/prisma.js";
+import { requireAuth } from "./middleware/auth.js";
+import { authRouter } from "./modules/auth/auth.routes.js";
 
 const app = express();
 const PORT = process.env.PORT ?? 4000;
@@ -26,7 +28,9 @@ app.get("/api/health/db", async (_req, res) => {
   }
 });
 
-app.get("/api/categories", async (req, res) => {
+app.use("/api/auth", authRouter);
+
+app.get("/api/categories", requireAuth, async (req, res) => {
   const type = req.query.type;
 
   if (type !== undefined && type !== "MASUK" && type !== "KELUAR") {
