@@ -91,11 +91,36 @@ Di akhir minggu pertama, diharapkan sudah tercapai:
 - [x] Frontend — halaman **Manajemen Kategori** (`/kategori`):
   - Tabel daftar kategori + tombol tambah, ubah, hapus.
   - Form modal/haluskan untuk tambah & ubah; konfirmasi sebelum hapus.
-- [ ] **Review akhir minggu**:
-  - [ ] Jalankan semua alur end-to-end: login → lihat kategori → tambah → ubah → hapus.
-  - [ ] Cek tidak ada variabel rahaya (password Supabase, JWT secret) yang ter-commit ke Git.
-  - [ ] Push kode ke branch `main`/`develop`; pastikan build lokal sukses (`next build` + `tsc`).
-  - [ ] Catat kendala & rencana minggu 2 (CRUD transaksi, dashboard — lihat PRD §10).
+- [x] **Review akhir minggu**:
+  - [x] Jalankan semua alur end-to-end: login → lihat kategori → tambah → ubah → hapus.
+  - [x] Cek tidak ada variabel rahasia (password Supabase, JWT secret) yang ter-commit ke Git.
+  - [x] Push kode ke branch `main`/`develop`; pastikan build lokal sukses (`next build` + `tsc`).
+  - [x] Catat kendala & rencana minggu 2 (CRUD transaksi, dashboard — lihat PRD §10).
+
+#### Hasil Review Minggu 1
+
+**Yang sudah jalan**
+
+- `tsc --noEmit` bersih di `apps/api` & `apps/web`; `next build` sukses (7 rute: `/`, `/dashboard`, `/kategori`, `/login`, `/_not-found`).
+- 16 skenario API kategori lulus otomatis: login, list, filter `?type=masuk|keluar`, filter tidak valid (400), tanpa token (401), tambah (201), duplikat (409), nama kosong (400), jenis tidak valid (400), ubah (200), id tidak ada (404), body kosong (400), nonaktifkan (200), hapus (200), hapus ulang (404).
+- Hapus kategori yang masih dipakai transaksi ditolak `409` dengan pesan jelas + `usedCount`.
+- Alur UI terverifikasi di browser: tambah → edit (nama + jenis) → hapus dengan konfirmasi; filter Semua/Masuk/Keluar berfungsi.
+- Audit rahasia: `.env` dan `.env.local` sudah masuk `.gitignore`; yang ter-track hanya `.env.example`.
+
+**Kendala yang ditemui**
+
+| Kendala | Penyebab | Solusi |
+| --- | --- | --- |
+| Halaman `/kategori` sempat redirect ke `/login` saat reload | Cookie `cash_management_token` belum ada saat request navigasi pertama | Login ulang via form agar `setAuthToken` menulis cookie sebelum navigasi |
+| Dev server mati setelah sesi sebelumnya | Proses background ikut berhenti saat sesi ditutup | Jalankan `npm run dev` di masing-masing app sebelum uji manual |
+| Output `next build` tidak lengkap di PowerShell | Native stderr dianggap error oleh PowerShell | Alihkan dengan `2>&1` / redirect ke file log lalu filter barisnya |
+
+**Rencana Minggu 2**
+
+1. CRUD transaksi (masuk/keluar) + validasi jumlah, tanggal, dan kategori aktif.
+2. Modal input transaksi di frontend dengan konfirmasi & umpan balik sukses/gagal.
+3. Ringkasan dashboard: total saldo, total masuk, total keluar, transaksi terbaru.
+4. Audit log untuk aksi tambah/ubah/hapus transaksi (lihat PRD §10).
 
 ## 3. Checklist Kelengkapan Minggu 1 (Definition of Done)
 
