@@ -1,6 +1,7 @@
 import axios, { AxiosError, InternalAxiosRequestConfig } from "axios";
+import { AUTH_COOKIE_NAME, AUTH_TOKEN_KEY } from "@/lib/auth-constants";
 
-export const AUTH_TOKEN_KEY = "cash_management_token";
+export { AUTH_COOKIE_NAME, AUTH_TOKEN_KEY };
 
 /**
  * Base URL backend Express.js, diambil dari env `NEXT_PUBLIC_API_URL`.
@@ -35,11 +36,16 @@ export function getAuthToken(): string | null {
 export function setAuthToken(token: string): void {
   if (typeof window === "undefined") return;
   window.localStorage.setItem(AUTH_TOKEN_KEY, token);
+  // max-age 8 jam, selaras dengan masa berlaku JWT
+  document.cookie = `${AUTH_COOKIE_NAME}=${encodeURIComponent(
+    token
+  )}; path=/; max-age=${8 * 60 * 60}; samesite=lax`;
 }
 
 export function clearAuthToken(): void {
   if (typeof window === "undefined") return;
   window.localStorage.removeItem(AUTH_TOKEN_KEY);
+  document.cookie = `${AUTH_COOKIE_NAME}=; path=/; max-age=0; samesite=lax`;
 }
 
 export const api = axios.create({

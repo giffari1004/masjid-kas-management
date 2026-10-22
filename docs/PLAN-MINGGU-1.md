@@ -69,16 +69,16 @@ Di akhir minggu pertama, diharapkan sudah tercapai:
 
 ### 📅 Kamis — Fitur Login Bendahara
 
-- [ ] Backend — modul auth:
+- [x] Backend — modul auth:
   - `POST /api/auth/login` (validasi email + password, hashing cek dengan bcrypt).
   - Buat **JWT** (atau session) sebagai token, simpan role `bendahara`.
   - Middleware proteksi route (`requireAuth`) untuk semua endpoint transaksi/kategori nanti.
-- [ ] Frontend — halaman login (`/login`):
+- [x] Frontend — halaman login (`/login`):
   - Form email + password, kirim via Axios ke endpoint login.
   - Simpan token di cookie (httponly disarankan) atau localStorage (sementara).
   - Redirect ke dashboard setelah berhasil; tampilkan pesan error yang jelas bila gagal.
-- [ ] **Proteksi route**: halaman utama/dashboard tidak bisa diakses tanpa token (middleware Next.js).
-- [ ] Verifikasi tes: login berhasil → akses terproteksi OK; token dihapus → redirect ke `/login`.
+- [x] **Proteksi route**: halaman utama/dashboard tidak bisa diakses tanpa token (middleware Next.js).
+- [x] Verifikasi tes: login berhasil → akses terproteksi OK; token dihapus → redirect ke `/login`.
 
 ### 📅 Jumat — CRUD Kategori Transaksi + Review Mingguan
 

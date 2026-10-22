@@ -1,6 +1,7 @@
 import "dotenv/config";
 import { PrismaClient } from "@prisma/client";
 import { PrismaPg } from "@prisma/adapter-pg";
+import bcrypt from "bcryptjs";
 
 const connectionString = process.env.DIRECT_URL ?? process.env.DATABASE_URL;
 
@@ -32,15 +33,17 @@ const KATEGORI_KELUAR = [
 ];
 
 async function main() {
-  // Seed user Bendahara (password akan di-hash saat fitur login dikerjakan)
+  // Seed user Bendahara dengan password ter-hash (bcrypt)
+  const passwordHash = await bcrypt.hash("bendahara123", 10);
+
   const bendahara = await prisma.user.upsert({
     where: { email: "bendahara@manbaulkhoir.id" },
-    update: { name: "Bendahara Masjid", role: "BENDAHARA" },
+    update: { name: "Bendahara Masjid", role: "BENDAHARA", passwordHash },
     create: {
       email: "bendahara@manbaulkhoir.id",
       name: "Bendahara Masjid",
       role: "BENDAHARA",
-      passwordHash: "placeholder-hash",
+      passwordHash,
     },
   });
 
