@@ -2,8 +2,8 @@ import "dotenv/config";
 import express from "express";
 import cors from "cors";
 import { prisma } from "./lib/prisma.js";
-import { requireAuth } from "./middleware/auth.js";
 import { authRouter } from "./modules/auth/auth.routes.js";
+import { categoriesRouter } from "./modules/categories/categories.routes.js";
 
 const app = express();
 const PORT = process.env.PORT ?? 4000;
@@ -29,34 +29,7 @@ app.get("/api/health/db", async (_req, res) => {
 });
 
 app.use("/api/auth", authRouter);
-
-app.get("/api/categories", requireAuth, async (req, res) => {
-  const type = req.query.type;
-
-  if (type !== undefined && type !== "MASUK" && type !== "KELUAR") {
-    res.status(400).json({
-      message: "Parameter type harus 'MASUK' atau 'KELUAR'.",
-    });
-    return;
-  }
-
-  try {
-    const categories = await prisma.category.findMany({
-      where: {
-        isActive: true,
-        ...(type ? { type } : {}),
-      },
-      orderBy: [{ type: "asc" }, { name: "asc" }],
-    });
-
-    res.json(categories);
-  } catch (error) {
-    res.status(500).json({
-      message:
-        error instanceof Error ? error.message : "Gagal mengambil kategori.",
-    });
-  }
-});
+app.use("/api/categories", categoriesRouter);
 
 const server = app.listen(PORT, () => {
   console.log(`API server running on http://localhost:${PORT}`);

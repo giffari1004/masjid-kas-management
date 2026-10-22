@@ -82,13 +82,13 @@ Di akhir minggu pertama, diharapkan sudah tercapai:
 
 ### 📅 Jumat — CRUD Kategori Transaksi + Review Mingguan
 
-- [ ] Backend — endpoint kategori (semua di belakang `requireAuth`):
+- [x] Backend — endpoint kategori (semua di belakang `requireAuth`):
   - `GET /api/categories` — daftar kategori (filter opsional `?type=masuk|keluar`).
   - `POST /api/categories` — tambah kategori baru.
   - `PUT /api/categories/:id` — ubah nama/jenis kategori.
   - `DELETE /api/categories` — hapus kategori (cek dulu: tolak bila masih dipakai transaksi, atau beri peringatan).
-- [ ] Validasi input di server (contoh: nama wajib diisi & unik per jenis, type hanya `masuk`/`keluar`).
-- [ ] Frontend — halaman **Manajemen Kategori** (`/kategori`):
+- [x] Validasi input di server (contoh: nama wajib diisi & unik per jenis, type hanya `masuk`/`keluar`).
+- [x] Frontend — halaman **Manajemen Kategori** (`/kategori`):
   - Tabel daftar kategori + tombol tambah, ubah, hapus.
   - Form modal/haluskan untuk tambah & ubah; konfirmasi sebelum hapus.
 - [ ] **Review akhir minggu**:
@@ -101,14 +101,14 @@ Di akhir minggu pertama, diharapkan sudah tercapai:
 
 | No  | Item                                                                            | Status |
 | --- | ------------------------------------------------------------------------------- | ------ |
-| 1   | Monorepo `apps/web` (Next.js) & `apps/api` (Express) berjalan lokal tanpa error | ☐      |
-| 2   | Database Supabase terhubung Prisma; migration `init` sukses                     | ☐      |
-| 3   | Tabel User, Category, Transaction, AuditLog sudah terbentuk                     | ☐      |
-| 4   | Kategori bawaan (PRD §5.1) sudah ter-seed di database                           | ☐      |
-| 5   | Login Bendahara berfungsi (hash password + token + proteksi route)              | ☐      |
-| 6   | CRUD kategori (backend API + frontend UI) berfungsi penuh                       | ☐      |
-| 7   | Axios instance frontend terkonfigurasi dengan environment variable              | ☐      |
-| 8   | Kode tersimpan di Git, tidak ada rahasia yang ter-commit                        | ☐      |
+| 1   | Monorepo `apps/web` (Next.js) & `apps/api` (Express) berjalan lokal tanpa error | ☑      |
+| 2   | Database Supabase terhubung Prisma; migration `init` sukses                     | ☑      |
+| 3   | Tabel User, Category, Transaction, AuditLog sudah terbentuk                     | ☑      |
+| 4   | Kategori bawaan (PRD §5.1) sudah ter-seed di database                           | ☑      |
+| 5   | Login Bendahara berfungsi (hash password + token + proteksi route)              | ☑      |
+| 6   | CRUD kategori (backend API + frontend UI) berfungsi penuh                       | ☑      |
+| 7   | Axios instance frontend terkonfigurasi dengan environment variable              | ☑      |
+| 8   | Kode tersimpan di Git, tidak ada rahasia yang ter-commit                        | ☑      |
 
 ## 4. Daftar Environment Variable (dicatat saat setup)
 
