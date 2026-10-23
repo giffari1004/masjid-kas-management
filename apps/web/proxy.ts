@@ -1,7 +1,7 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { AUTH_COOKIE_NAME } from "@/lib/auth-constants";
 
-const protectedRoutes = ["/dashboard", "/kategori"];
+const protectedRoutes = ["/dashboard", "/kategori", "/transactions"];
 const publicOnlyRoutes = ["/login"];
 
 export default function proxy(request: NextRequest) {

@@ -4,6 +4,7 @@ import cors from "cors";
 import { prisma } from "./lib/prisma.js";
 import { authRouter } from "./modules/auth/auth.routes.js";
 import { categoriesRouter } from "./modules/categories/categories.routes.js";
+import { transactionsRouter } from "./modules/transactions/transactions.routes.js";
 
 const app = express();
 const PORT = process.env.PORT ?? 4000;
@@ -30,6 +31,7 @@ app.get("/api/health/db", async (_req, res) => {
 
 app.use("/api/auth", authRouter);
 app.use("/api/categories", categoriesRouter);
+app.use("/api/transactions", transactionsRouter);
 
 const server = app.listen(PORT, () => {
   console.log(`API server running on http://localhost:${PORT}`);
