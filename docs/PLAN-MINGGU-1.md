@@ -154,4 +154,4 @@ Di akhir minggu pertama, diharapkan sudah tercapai:
 
 ---
 
-**Lanjut ke:** [PLAN-MINGGU-2.md](./PLAN-MINGGU-2.md) — CRUD transaksi masuk/keluar & halaman dashboard _(dibuat menyusul)_.
+**Lanjut ke:** [PLAN-MINGGU-2.md](./PLAN-MINGGU-2.md) — CRUD transaksi masuk/keluar & halaman dashboard.

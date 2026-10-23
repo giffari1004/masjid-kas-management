@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
+import { AppNav } from "@/components/app-nav";
 import { ApiError } from "@/lib/api";
 import {
   createCategory,
@@ -115,7 +116,9 @@ export default function CategoryList() {
   ];
 
   return (
-    <div className="space-y-4">
+    <>
+      <AppNav />
+      <div className="mx-auto w-full max-w-5xl space-y-4 px-4 py-8">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div className="flex gap-2">
           {filters.map((item) => (
@@ -292,6 +295,7 @@ export default function CategoryList() {
           </table>
         </div>
       )}
-    </div>
+      </div>
+    </>
   );
 }
